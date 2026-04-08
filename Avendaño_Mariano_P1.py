@@ -81,9 +81,18 @@ while sistema_activo:
             
 
         case '4':
-            print("\n--- 4. Consulta de Stock ---")
-            # TIP: Pedir nombre, buscar si está en 'herramientas'. Si está, usar ese índice para mostrar 'existencias'
-            print("Funcionalidad en construcción...")
+            print("\n--- Consulta de Stock ---")
+            buscar= input=(f"Ingrese producto: ").strip().capitalize()
+            while True:
+                if buscar.isalpha():
+                    if buscar in herramientas:
+                        indice= herramientas[buscar].index()
+                        print(f"{herramientas[indice]}----- stock: {existencias[indice]}")
+                        break
+                    else:
+                        print("herramienta no registrada.")
+                else:
+                    print("Error. Dato no válido.")
 
         case '5':
             print("\n--- 5. Reporte de Agotados ---")
