@@ -95,9 +95,16 @@ while sistema_activo:
                     print("Error. Dato no válido.")
 
         case '5':
-            print("\n--- 5. Reporte de Agotados ---")
+            print("\n--- PRODUCTOS SIN STOCK ---")
+            sin_stock[]
+            for i in range(len(existencias)):
+              if existencias[i] == 0:
+                sin_stock[i].append(herramientas[i])
+            #se muestra listado sin stock
+            for i in range(len(sin_stock)):
+                print(sin_stock[i])
             # TIP: Recorrer 'existencias'. Si el valor es == 0, mostrar el nombre en 'herramientas' con ese mismo índice
-            print("Funcionalidad en construcción...")
+            
 
         case '6':
             print("\n--- 6. Alta de Nuevo Producto ---")
