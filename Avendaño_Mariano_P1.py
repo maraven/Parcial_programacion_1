@@ -82,16 +82,15 @@ while sistema_activo:
 
         case '4':
             print("\n--- Consulta de Stock ---")
-            
             while True:
                 buscar = input(f"Ingrese producto: ").strip()
-                #se valida que el dato sean letras.
+                #Se valida que el dato sean letras.
                 if buscar.isalpha():
-                    #le damos formato para las mayusculas y minusculas.
+                    #Le damos formato para las mayusculas y minusculas.
                     buscar = buscar.capitalize()
-                    #buscamos la herramienta en la lista.
+                    #Buscamos la herramienta en la lista.
                     if buscar in herramientas:
-                        #extraemos el indice para mostrar el stock correspondiente.
+                        #Extraemos el indice para mostrar el stock correspondiente.
                         indice= herramientas.index(buscar)
                         print(f"{herramientas[indice]}----- stock: {existencias[indice]}")
                         break
@@ -101,20 +100,23 @@ while sistema_activo:
 
         case '5':
             print("\n--- PRODUCTOS SIN STOCK ---")
-            sin_stock = False
-            #Se recorre la lista de existencias y se verifica si hay stock 0.
+            sin_stock = []
+            #Se recorre la lista de existencias y se crea otra lista con las herramientas con stock 0.
             for i in range(len(existencias)):
-                if existencias[i] == 0:
-                    #Se muestra la herramienta cuando el stock es 0.
-                    print(f" - {herramientas[i]}")
-                    sin_stock = True
-            if not sin_stock:
-                print("No hay productos sin stock.")
+                if existencias[i] == 0:    
+                    sin_stock.append(herramientas[i])
+            #Si no hay productos con stock 0 se envia mensaje.
+            if sin_stock == []:
+                print(f"-> No hay productos sin stock.")
+            for i in range(len(sin_stock)):
+                print(f"{sin_stock[i]} ----- stock: 0")
+                
 
         case '6':
-            print("\n--- 6. Alta de Nuevo Producto ---")
+            print("\n--- Alta de Nuevo Producto ---")
+            
             # TIP: Lógica muy similar a la opción 1, pero pidiendo solo un producto y su stock inicial
-            print("Funcionalidad en construcción...")
+            
 
         case '7':
             print("\n--- 7. Actualización de Stock (Venta/Ingreso) ---")
