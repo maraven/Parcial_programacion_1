@@ -1,12 +1,12 @@
-#herramientas[] pertenece a existencias[]
+#herramientas[] pertenece a existencias[].
 
 herramientas = []
 existencias = []
 
-#Variable de control para el bucle principal
+#Variable de control para el bucle principal.
 sistema_activo = True
 while sistema_activo:
-    # Menú
+    # Menú.
     print("\n" + "="*45)
     print("FERRETERÍA - SISTEMA DE CONTROL DE INVENTARIO")
     print("="*45)
@@ -20,14 +20,14 @@ while sistema_activo:
     print("8. Salir")
     print("="*45)
     
-    opcion = input("Ingrese el número de la opción deseada: ").strip() #se valida opcion en el match case
+    opcion = input("Ingrese el número de la opción deseada: ").strip() #se valida opcion en el match case.
     
     match opcion:
         case '1':
-            print("\n--- 1. Carga Inicial de Herramientas ---")
+            print("\n--- Carga Inicial de Herramientas ---")
             cantidad = input("¿Cuántas herramientas distintas desea cargar?: ").strip()
             
-            #Validación
+            #Validación.
             if cantidad.isdigit() and int(cantidad) > 0:
                 cantidad = int(cantidad)
                 cargadas = 0
@@ -46,7 +46,7 @@ while sistema_activo:
                     else:
                         herramientas.append(nombre)
                 
-                        #Se inicia la lista existencias en 0
+                        #Se inicia la lista existencias en 0.
                         existencias.append(0) 
                         cargadas += 1 
                 print("-> Carga inicial completada con éxito.")
@@ -59,13 +59,13 @@ while sistema_activo:
             if len(herramientas) == 0:
                 print("-> Error: No hay herramientas registradas. Ejecute la opción 1 primero.")
             else:
-                #Recorremos la lista de herramientas respetando el orden de ingreso
+                #Recorremos la lista de herramientas respetando el orden de ingreso.
                 for i in range(len(herramientas)):
                     stock_valido = False
                     while not stock_valido:
                         stock = input(f"Ingrese el stock para {herramientas[i]}: ")
                         
-                        #Validamos que el stock sea un número entero positivo o cero
+                        #Validamos que el stock sea un número entero positivo o cero.
                         if stock.isdigit():
                             existencias[i] = int(stock)
                             stock_valido = True
@@ -75,36 +75,41 @@ while sistema_activo:
 
         case '3':
             print("\n--- INVENTARIO ---")
-            
+            #Se recorre la lista de herramientas y existencias para mostrar el inventario completo.
             for i in range(len(herramientas)):
                 print(f"{herramientas[i]} ----- stock: {existencias[i]}")
             
 
         case '4':
             print("\n--- Consulta de Stock ---")
-            buscar= input=(f"Ingrese producto: ").strip().capitalize()
+            
             while True:
+                buscar = input(f"Ingrese producto: ").strip()
+                #se valida que el dato sean letras.
                 if buscar.isalpha():
+                    #le damos formato para las mayusculas y minusculas.
+                    buscar = buscar.capitalize()
+                    #buscamos la herramienta en la lista.
                     if buscar in herramientas:
-                        indice= herramientas[buscar].index()
+                        #extraemos el indice para mostrar el stock correspondiente.
+                        indice= herramientas.index(buscar)
                         print(f"{herramientas[indice]}----- stock: {existencias[indice]}")
                         break
                     else:
-                        print("herramienta no registrada.")
-                else:
-                    print("Error. Dato no válido.")
+                        print("-> Error: Herramienta no registrada.")
+                print("-> Error: Dato no válido.")
 
         case '5':
             print("\n--- PRODUCTOS SIN STOCK ---")
-            sin_stock[]
+            sin_stock = False
+            #Se recorre la lista de existencias y se verifica si hay stock 0.
             for i in range(len(existencias)):
-              if existencias[i] == 0:
-                sin_stock[i].append(herramientas[i])
-            #se muestra listado sin stock
-            for i in range(len(sin_stock)):
-                print(sin_stock[i])
-            # TIP: Recorrer 'existencias'. Si el valor es == 0, mostrar el nombre en 'herramientas' con ese mismo índice
-            
+                if existencias[i] == 0:
+                    #Se muestra la herramienta cuando el stock es 0.
+                    print(f" - {herramientas[i]}")
+                    sin_stock = True
+            if not sin_stock:
+                print("No hay productos sin stock.")
 
         case '6':
             print("\n--- 6. Alta de Nuevo Producto ---")
