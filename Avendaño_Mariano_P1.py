@@ -83,11 +83,9 @@ while sistema_activo:
         case '4':
             print("\n--- Consulta de Stock ---")
             while True:
-                buscar = input(f"Ingrese producto: ").strip()
+                buscar = input(f"Ingrese producto: ").strip().capitalize()
                 #Se valida que el dato sean letras.
                 if buscar.isalpha():
-                    #Le damos formato para las mayusculas y minusculas.
-                    buscar = buscar.capitalize()
                     #Buscamos la herramienta en la lista.
                     if buscar in herramientas:
                         #Extraemos el indice para mostrar el stock correspondiente.
@@ -115,7 +113,27 @@ while sistema_activo:
         case '6':
             print("\n--- Alta de Nuevo Producto ---")
             
-            # TIP: Lógica muy similar a la opción 1, pero pidiendo solo un producto y su stock inicial
+            
+            alta = input("Ingrese el nombre del nuevo producto: ").strip().capitalize()
+            #Validamos que el nombre no este vacio, no sea un numero y no este repetido.
+            if alta == "":
+                print("-> Error: El nombre no puede estar vacío.")
+            elif not alta.isalpha():
+                print("-> Error: Dato no válido.")
+            elif alta in herramientas:
+                print("-> Error: La herramienta ya se encuentra registrada.")
+            else:
+                herramientas.append(alta)
+                #existencias.append(0) #El nuevo producto se inicia con stock 0.
+                #Se carga el stock.
+                stock = input(f"Ingrese el stock para {alta}: ").strip()
+                #Validamos que el stock sea un número entero positivo o cero.
+                if stock.isdigit():
+                    stock = int(stock)
+                    existencias.append(stock) #Actualizamos el stock del nuevo producto.
+                    print(f"-> Herramienta '{alta}' registrada con stock de {stock}.")
+                else:
+                    print("-> Error: El stock debe ser un número entero (0 o mayor).")
             
 
         case '7':
