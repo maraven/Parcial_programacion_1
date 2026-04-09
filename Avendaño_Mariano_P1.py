@@ -137,8 +137,35 @@ while sistema_activo:
             
 
         case '7':
-            print("\n--- 7. Actualización de Stock (Venta/Ingreso) ---")
-            # TIP: Buscar herramienta. Preguntar si es Venta o Ingreso. 
+            print("\n--- Actualización de Stock (Venta/Ingreso) ---")
+            #Se pregunta si es Venta o Ingreso.
+            while True:
+
+                opcion= input(f"Venta (V) o Ingreso (I): ").strip().upper()
+                #Venta
+                if opcion == 'V':
+                    while True:
+                        ingreso = input(f"Ingrese producto: ").strip().capitalize()
+                        if ingreso.isalpha():
+                            print("-> Error: Dato no válido.")
+                        elif ingreso not in herramientas:
+                            print("-> Error: Herramienta no esta en el catalogo.")
+                        else:
+                            indice = herramientas.index(ingreso)
+                            venta = input(f"Ingrese cantidad a vender: ").strip()
+                            if not venta.isdigit() and int(venta) > 0:
+                                print("-> Error: La cantidad a vender debe ser un número entero mayor a 0.")
+                            elif existencias[indice] >= int(venta):
+                                existencias[indice] -= int(venta)
+                                print(f"-> Venta realizada. Stock actualizado de {herramientas[indice]}: {existencias[indice]}")
+                            else:
+                                print(f"-> Error: Stock insuficiente. Stock actual de {herramientas[indice]}: {existencias[indice]}")
+                        break
+                        
+                #Ingreso
+                elif opcion == 'I':
+            
+
             # Si es venta, validar que existencias[i] >= cantidad_venta antes de restar.
             print("Funcionalidad en construcción...")
 
