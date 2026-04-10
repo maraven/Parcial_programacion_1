@@ -146,7 +146,7 @@ while sistema_activo:
                 if opcion == 'V':
                     while True:
                         ingreso_venta = input(f"Ingrese producto: ").strip().capitalize()
-                        if ingreso_venta.isalpha():
+                        if not ingreso_venta.isalpha():
                             print("-> Error: Dato no válido.")
                         elif ingreso_venta not in herramientas:
                             print("-> Error: Herramienta no esta en el catalogo.")
@@ -160,8 +160,7 @@ while sistema_activo:
                                 print(f"-> Venta realizada. Stock actualizado de {herramientas[indice]}: {existencias[indice]}")
                             else:
                                 print(f"-> Error: Stock insuficiente. Stock actual de {herramientas[indice]}: {existencias[indice]}")
-                        break
-                break   
+                        break  
                 #Ingreso
                 elif opcion == 'I':
                     while True:
@@ -176,12 +175,13 @@ while sistema_activo:
                             #Se valida stock actualizado
                             if not ingreso_stock.isdigit():
                                 print(f"-> Error: dato no válido.")
-                            existencias[indice] += ingreso_stock
+                            else:
+                                ingreso_stock= int(ingreso_stock)
+                                existencias[indice] += ingreso_stock
                             break   
                 else:
-                    print(f"Error: debe ingresar 'V' o 'I'")
-
-
+                    print("-> Error: debe ingresar 'V' o 'I'" )
+                break
         case '8':
             print("\n--- Cerrando el Sistema ---")
             # Cambiamos la variable de control para romper el bucle while
