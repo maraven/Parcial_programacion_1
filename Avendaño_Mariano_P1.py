@@ -86,15 +86,19 @@ while sistema_activo:
                 buscar = input(f"Ingrese producto: ").strip().capitalize()
                 #Se valida que el dato sean letras.
                 if buscar.isalpha():
+                    print("-> Error: Dato no válido.")
+                    break
+                else:
                     #Buscamos la herramienta en la lista.
                     if buscar in herramientas:
                         #Extraemos el indice para mostrar el stock correspondiente.
                         indice= herramientas.index(buscar)
                         print(f"{herramientas[indice]}----- stock: {existencias[indice]}")
-                        break
+                        
                     else:
                         print("-> Error: Herramienta no registrada.")
-                print("-> Error: Dato no válido.")
+                        break
+                
 
         case '5':
             print("\n--- PRODUCTOS SIN STOCK ---")
