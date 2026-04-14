@@ -85,7 +85,7 @@ while sistema_activo:
             while True:
                 buscar = input(f"Ingrese producto: ").strip().capitalize()
                 #Se valida que el dato sean letras.
-                if buscar.isalpha():
+                if not buscar.isalpha():
                     print("-> Error: Dato no válido.")
                     break
                 else:
@@ -116,76 +116,72 @@ while sistema_activo:
 
         case '6':
             print("\n--- Alta de Nuevo Producto ---")
-            
-            
-            alta = input("Ingrese el nombre del nuevo producto: ").strip().capitalize()
+            alta = input(f"Ingrese el nombre del nuevo producto: ").strip().capitalize()
             #Validamos que el nombre no este vacio, no sea un numero y no este repetido.
             if alta == "":
-                print("-> Error: El nombre no puede estar vacío.")
+                print(f"-> Error: El nombre no puede estar vacío.")
             elif not alta.isalpha():
-                print("-> Error: Dato no válido.")
+                print(f"-> Error: Dato no válido.")
             elif alta in herramientas:
-                print("-> Error: La herramienta ya se encuentra registrada.")
+                print(f"-> Error: La herramienta ya se encuentra registrada.")
             else:
-                herramientas.append(alta)
-                #existencias.append(0) #El nuevo producto se inicia con stock 0.
-                #Se carga el stock.
+                #validamos el stock y ahi se agrega a las listas la herramienta y su stock. 
+                #se pide primero el stock para evitar que se agregue una herramienta sin stock.
                 stock = input(f"Ingrese el stock para {alta}: ").strip()
-                #Validamos que el stock sea un número entero positivo o cero.
                 if stock.isdigit():
                     stock = int(stock)
+                    herramientas.append(alta)
                     existencias.append(stock) #Actualizamos el stock del nuevo producto.
                     print(f"-> Herramienta '{alta}' registrada con stock de {stock}.")
                 else:
-                    print("-> Error: El stock debe ser un número entero (0 o mayor).")
+                    print(f"-> Error: El stock debe ser un número entero (0 o mayor).")
             
 
         case '7':
             print("\n--- Actualización de Stock (Venta/Ingreso) ---")
             #Se pregunta si es Venta o Ingreso.
-            while True:
 
-                opcion= input(f"Venta (V) o Ingreso (I): ").strip().upper()
-                #Venta
-                if opcion == 'V':
-                    while True:
-                        ingreso_venta = input(f"Ingrese producto: ").strip().capitalize()
-                        if not ingreso_venta.isalpha():
-                            print("-> Error: Dato no válido.")
-                        elif ingreso_venta not in herramientas:
-                            print("-> Error: Herramienta no esta en el catalogo.")
+            opcion= input(f"Venta (V) o Ingreso (I): ").strip().upper()
+            #Venta
+            if opcion == 'V':
+                while True:
+                    ingreso_venta = input(f"Ingrese producto: ").strip().capitalize()
+                    if not ingreso_venta.isalpha():
+                        print(f"-> Error: Dato no válido.")
+                    elif ingreso_venta not in herramientas:
+                        print("-> Error: Herramienta no esta en el catalogo.")
+                    else:
+                        indice = herramientas.index(ingreso_venta)
+                        venta = input(f"Ingrese cantidad a vender: ").strip()
+                        if not venta.isdigit():
+                            print(f"-> Error: La cantidad a vender debe ser un número entero mayor a 0.")
+                        elif existencias[indice] >= int(venta):
+                            existencias[indice] -= int(venta)
+                            print(f"-> Venta realizada. Stock actualizado de {herramientas[indice]}: {existencias[indice]}")
                         else:
-                            indice = herramientas.index(ingreso_venta)
-                            venta = input(f"Ingrese cantidad a vender: ").strip()
-                            if not venta.isdigit():
-                                print("-> Error: La cantidad a vender debe ser un número entero mayor a 0.")
-                            elif existencias[indice] >= int(venta):
-                                existencias[indice] -= int(venta)
-                                print(f"-> Venta realizada. Stock actualizado de {herramientas[indice]}: {existencias[indice]}")
-                            else:
-                                print(f"-> Error: Stock insuficiente. Stock actual de {herramientas[indice]}: {existencias[indice]}")
-                        break  
-                #Ingreso
-                elif opcion == 'I':
-                    while True:
-                        ingreso = input(f"Ingresar nombre de producto: ").strip().capitalize()
-                        if not ingreso.isalpha():
-                            print(f"-> Error: Dato no válido.")
-                        elif ingreso not in herramientas:
-                            print(f"Producto no se encuentra en catalogo.")
+                            print(f"-> Error: Stock insuficiente. Stock actual de {herramientas[indice]}: {existencias[indice]}")
+                    break  
+            #Ingreso
+            elif opcion == 'I':
+                while True:
+                    ingreso = input(f"Ingresar nombre de producto: ").strip().capitalize()
+                    if not ingreso.isalpha():
+                        print(f"-> Error: Dato no válido.")
+                    elif ingreso not in herramientas:
+                        print(f"Producto no se encuentra en catalogo.")
+                    else:
+                        indice = herramientas.index(ingreso)
+                        ingreso_stock = input(f"Ingrese nuevas existencias: ").strip()
+                        #Se valida stock actualizado
+                        if not ingreso_stock.isdigit():
+                            print(f"-> Error: dato no válido.")
                         else:
-                            indice = herramientas.index(ingreso)
-                            ingreso_stock = input(f"Ingrese nuevas existencias: ").strip()
-                            #Se valida stock actualizado
-                            if not ingreso_stock.isdigit():
-                                print(f"-> Error: dato no válido.")
-                            else:
-                                ingreso_stock= int(ingreso_stock)
-                                existencias[indice] += ingreso_stock
-                            break   
-                else:
-                    print("-> Error: debe ingresar 'V' o 'I'" )
-                break
+                            ingreso_stock= int(ingreso_stock)
+                            existencias[indice] += ingreso_stock
+                        break   
+            else:
+                print(f"-> Error: debe ingresar 'V' o 'I'" )
+
         case '8':
             print("\n--- Cerrando el Sistema ---")
             # Cambiamos la variable de control para romper el bucle while
