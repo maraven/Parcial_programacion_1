@@ -61,14 +61,13 @@ while sistema_activo:
             else:
                 #Recorremos la lista de herramientas respetando el orden de ingreso.
                 for i in range(len(herramientas)):
-                    stock_valido = False
-                    while not stock_valido:
+                    while True:
                         stock = input(f"Ingrese el stock para {herramientas[i]}: ")
-                        
                         #Validamos que el stock sea un número entero positivo o cero.
                         if stock.isdigit():
                             existencias[i] = int(stock)
-                            stock_valido = True
+                            
+                            break
                         else:
                             print("-> Error: El stock debe ser un número entero (0 o mayor).")
                 print("-> Existencias actualizadas correctamente.")
@@ -130,8 +129,9 @@ while sistema_activo:
                 stock = input(f"Ingrese el stock para {alta}: ").strip()
                 if stock.isdigit():
                     stock = int(stock)
+                    #Actualizamos las listas.
                     herramientas.append(alta)
-                    existencias.append(stock) #Actualizamos el stock del nuevo producto.
+                    existencias.append(stock) 
                     print(f"-> Herramienta '{alta}' registrada con stock de {stock}.")
                 else:
                     print(f"-> Error: El stock debe ser un número entero (0 o mayor).")
@@ -155,12 +155,13 @@ while sistema_activo:
                         venta = input(f"Ingrese cantidad a vender: ").strip()
                         if not venta.isdigit():
                             print(f"-> Error: La cantidad a vender debe ser un número entero mayor a 0.")
+                        #Se verifica que la cantidad a vender no sea mayor al stock actual.
                         elif existencias[indice] >= int(venta):
                             existencias[indice] -= int(venta)
                             print(f"-> Venta realizada. Stock actualizado de {herramientas[indice]}: {existencias[indice]}")
+                            break
                         else:
                             print(f"-> Error: Stock insuficiente. Stock actual de {herramientas[indice]}: {existencias[indice]}")
-                    break  
             #Ingreso
             elif opcion == 'I':
                 while True:
