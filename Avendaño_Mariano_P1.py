@@ -88,12 +88,19 @@ while sistema_activo:
                     print("-> Error: Dato no válido.")
                     break
                 else:
+                    '''for i in range(len(herramientas)):
+                        if herramientas[i] == buscar:
+                            print(f"{herramientas[i]} ----- stock: {existencias[i]}")
+                            break
+                        else:
+                            print("-> Error: Herramienta no registrada.")
+                            break
+                        '''
                     #Buscamos la herramienta en la lista.
                     if buscar in herramientas:
                         #Extraemos el indice para mostrar el stock correspondiente.
                         indice= herramientas.index(buscar)
-                        print(f"{herramientas[indice]}----- stock: {existencias[indice]}")
-                        
+                        print(f"{herramientas[indice]}----- stock: {existencias[indice]}")  
                     else:
                         print("-> Error: Herramienta no registrada.")
                         break
@@ -117,21 +124,28 @@ while sistema_activo:
             print("\n--- Alta de Nuevo Producto ---")
             alta = input(f"Ingrese el nombre del nuevo producto: ").strip().capitalize()
             #Validamos que el nombre no este vacio, no sea un numero y no este repetido.
+            repetido = False
+            for i in range(len(herramientas)):
+                if alta == herramientas[i]:
+                    print(f"-> Error: La herramienta ya se encuentra registrada.")
+                    repetido = True
+                    break
+            if repetido == True:
+                continue
             if alta == "":
                 print(f"-> Error: El nombre no puede estar vacío.")
             elif not alta.isalpha():
                 print(f"-> Error: Dato no válido.")
-            elif alta in herramientas:
-                print(f"-> Error: La herramienta ya se encuentra registrada.")
+            #elif alta in herramientas:
+            #    print(f"-> Error: La herramienta ya se encuentra registrada.")
             else:
-                #validamos el stock y ahi se agrega a las listas la herramienta y su stock. 
                 #se pide primero el stock para evitar que se agregue una herramienta sin stock.
                 stock = input(f"Ingrese el stock para {alta}: ").strip()
                 if stock.isdigit():
                     stock = int(stock)
                     #Actualizamos las listas.
                     herramientas.append(alta)
-                    existencias.append(stock) 
+                    existencias.append(stock)
                     print(f"-> Herramienta '{alta}' registrada con stock de {stock}.")
                 else:
                     print(f"-> Error: El stock debe ser un número entero (0 o mayor).")
@@ -146,10 +160,18 @@ while sistema_activo:
             if opcion == 'V':
                 while True:
                     ingreso_venta = input(f"Ingrese producto: ").strip().capitalize()
+                    no_encontrado = False
+                    for i in range(len(herramientas)):
+                        if ingreso_venta != herramientas[i]:
+                            no_encontrado = True
+                            break
+                    if no_encontrado == True:
+                        print("-> Error: Herramienta no esta en el catalogo.")
+                        break
                     if not ingreso_venta.isalpha():
                         print(f"-> Error: Dato no válido.")
-                    elif ingreso_venta not in herramientas:
-                        print("-> Error: Herramienta no esta en el catalogo.")
+                    #elif ingreso_venta not in herramientas:
+                    #    print("-> Error: Herramienta no esta en el catalogo.")
                     else:
                         indice = herramientas.index(ingreso_venta)
                         venta = input(f"Ingrese cantidad a vender: ").strip()
