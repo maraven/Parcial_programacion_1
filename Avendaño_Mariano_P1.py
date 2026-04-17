@@ -81,7 +81,9 @@ while sistema_activo:
 
         case '4':
             print("\n--- Consulta de Stock ---")
+            
             while True:
+                no_encontrado = False
                 buscar = input(f"Ingrese producto: ").strip().capitalize()
                 #Se valida que el dato sean letras.
                 if not buscar.isalpha():
@@ -92,9 +94,12 @@ while sistema_activo:
                     for i in range(len(herramientas)):
                         if herramientas[i] == buscar:
                             print(f"{herramientas[i]} ----- stock: {existencias[i]}") 
+                            break
                         else:
-                            print("-> Error: Herramienta no registrada.")
-                    break    
+                            no_encontrado = True
+                    if no_encontrado == True:
+                        print("-> Error: Herramienta no registrada.")
+                break    
 
         case '5':
             print("\n--- PRODUCTOS SIN STOCK ---")
@@ -117,17 +122,14 @@ while sistema_activo:
             repetido = False
             for i in range(len(herramientas)):
                 if alta == herramientas[i]:
-                    print(f"-> Error: La herramienta ya se encuentra registrada.")
                     repetido = True
                     break
             if repetido == True:
-                continue
-            if alta == "":
+                print(f"-> Error: La herramienta ya se encuentra registrada.")
+            elif alta == "":
                 print(f"-> Error: El nombre no puede estar vacío.")
             elif not alta.isalpha():
                 print(f"-> Error: Dato no válido.")
-            #elif alta in herramientas:
-            #    print(f"-> Error: La herramienta ya se encuentra registrada.")
             else:
                 #se pide primero el stock para evitar que se agregue una herramienta sin stock.
                 stock = input(f"Ingrese el stock para {alta}: ").strip()
@@ -163,11 +165,9 @@ while sistema_activo:
                         print(f"-> Error: El producto no esta en el catalogo.")
                         break
                     
-                    #elif ingreso_venta not in herramientas:
-                    #    print("-> Error: Herramienta no esta en el catalogo.")
                     else:
-                        indice = herramientas.index(ingreso_venta)
                         venta = input(f"Ingrese cantidad a vender: ").strip()
+                        indice = herramientas.index(ingreso_venta)
                         if not venta.isdigit():
                             print(f"-> Error: La cantidad a vender debe ser un número entero mayor a 0.")
                         #Se verifica que la cantidad a vender no sea mayor al stock actual.
