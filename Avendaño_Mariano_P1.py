@@ -82,7 +82,7 @@ while sistema_activo:
             print("\n--- Consulta de Stock ---")
             
             while True:
-                no_encontrado = False
+                
                 buscar = input(f"Ingrese producto: ").strip().capitalize()
                 #Se valida que el dato sean letras.
                 if not buscar.isalpha():
@@ -90,13 +90,13 @@ while sistema_activo:
                     break
                 else:
                     #Buscamos la herramienta en la lista.
+                    encontrado = False
                     for i in range(len(herramientas)):
                         if herramientas[i] == buscar:
                             print(f"{herramientas[i]} ----- stock: {existencias[i]}") 
+                            encontrado = True
                             break
-                        else:
-                            no_encontrado = True
-                    if no_encontrado == True:
+                    if encontrado == False:
                         print("-> Error: Herramienta no registrada.")
                 break    
 
