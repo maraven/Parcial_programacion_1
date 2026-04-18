@@ -62,11 +62,10 @@ while sistema_activo:
                 #Recorremos la lista de herramientas respetando el orden de ingreso.
                 for i in range(len(herramientas)):
                     while True:
-                        stock = input(f"Ingrese el stock para {herramientas[i]}: ")
+                        stock = input(f"Ingrese el stock para {herramientas[i]}: ").strip()
                         #Validamos que el stock sea un número entero positivo o cero.
                         if stock.isdigit():
-                            existencias[i] = int(stock)
-                            
+                            existencias[i]= int(stock)
                             break
                         else:
                             print("-> Error: El stock debe ser un número entero (0 o mayor).")
@@ -156,12 +155,12 @@ while sistema_activo:
                         print(f"-> Error: Dato no válido.")
                         break
 
-                    no_encontrado = False
+                    encontrado = False
                     for i in range(len(herramientas)):
-                        if ingreso_venta != herramientas[i]:
-                            no_encontrado = True
-                            
-                    if no_encontrado == True:
+                        if ingreso_venta == herramientas[i]:
+                            encontrado = True
+
+                    if encontrado == False:
                         print(f"-> Error: El producto no esta en el catalogo.")
                         break
                     
@@ -184,12 +183,12 @@ while sistema_activo:
                     if not ingreso.isalpha():
                         print(f"-> Error: Dato no válido.")
                         break
-                    no_encontrado = False
+                    encontrado = False
                     #Se recorre la lista de herramientas para verificar si el producto a ingresar esta registrado o no.
                     for i in range(len(herramientas)):
-                        if ingreso != herramientas[i]:
-                            no_encontrado = True
-                    if no_encontrado == True:
+                        if ingreso == herramientas[i]:
+                            encontrado = True
+                    if encontrado == False:
                         print(f"-> Error: El producto no esta en el catalogo.")
                         break
                     indice = herramientas.index(ingreso)
